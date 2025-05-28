@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('title');
+            $table->text('content');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+      
      */
     public function down(): void
     {

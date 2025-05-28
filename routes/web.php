@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ModerationController;
+use App\Http\Controllers\ForumController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,3 +21,18 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['role:member|moderator|admin'])->group(function () {
+    Route::get('/forums', [ForumController::class, 'index'])->name('forums.index');
+});
+
+
+Route::middleware(['role:moderator|admin'])->group(function () {
+    Route::get('/moderation', [ModerationController::class, 'index'])->name('moderation.index');
+});
+
+
+
+
+Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminController::class, 'index']);
+

@@ -12,6 +12,7 @@ class CreateVotesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('type', ['upvote', 'downvote']);
+            $table->text('content');
             $table->timestamps();
         });
     }
