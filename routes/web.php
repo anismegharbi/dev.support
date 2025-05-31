@@ -22,17 +22,23 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::middleware(['role:member|moderator|admin'])->group(function () {
+Route::middleware(['auth', 'check.role:member,moderator,admin'])->group(function () {
     Route::get('/forums', [ForumController::class, 'index'])->name('forums.index');
 });
 
 
-Route::middleware(['role:moderator|admin'])->group(function () {
+Route::middleware(['auth', 'check.role:moderator,admin'])->group(function () {
     Route::get('/moderation', [ModerationController::class, 'index'])->name('moderation.index');
 });
 
+Route::middleware(['auth', 'check.role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/demands', [AdminController::class, 'viewDemands'])->name('admin.viewDemands');
+    Route::get('/admin/members', [AdminController::class, 'viewMembers'])->name('admin.members');
+    Route::get('/admin/moderators', [AdminController::class, 'viewModerators'])->name('admin.moderators');
 
 
 
-Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', [AdminController::class, 'index']);
+});
 
+//you can login as admin wuith  email==>admin@example.com/ ps ==>password route you can see 
