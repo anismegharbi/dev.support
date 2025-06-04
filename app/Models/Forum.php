@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Forum extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'name','title', 'description'];
+    protected $fillable = [ 'name',"title", 'description'];
 
 }

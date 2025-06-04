@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModerationController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\CategoryController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,9 +38,15 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/admin/demands', [AdminController::class, 'viewDemands'])->name('admin.viewDemands');
     Route::get('/admin/members', [AdminController::class, 'viewMembers'])->name('admin.members');
     Route::get('/admin/moderators', [AdminController::class, 'viewModerators'])->name('admin.moderators');
+ 
+    // catgory
+    Route::get('/admin/categories',  [CategoryController::class, 'index'] )->name('admin.categories.index');
+    Route::get('/admin/categories/create', [CategoryController::class, 'create'] )->name('admin.categories.create');
+    Route::post('/admin/categories/store',  [CategoryController::class, 'store']  )->name('admin.categories.store');
+    Route::get('/admin/categories/edit/{category}', [CategoryController::class, 'edit'] )->name('admin.categories.edit');
+    Route::put('/admin/categories/update/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/admin/categories/{category}',[CategoryController::class, 'delete'])->name('admin.categories.delete');
 
-
-
+    //
 });
 
-//you can login as admin wuith  email==>admin@example.com/ ps ==>password route you can see 
